@@ -78,6 +78,8 @@ main {
     display: block;
     border:solid 8px black;
     width: 320px;
+    min-height: 180px;
+    max-height: 900px;
     background-size: cover;
 }
 
