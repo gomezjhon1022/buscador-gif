@@ -13,6 +13,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100vh;
+    background-color: #f7dcb1;
 }
 header {
     display:flex;
@@ -39,7 +41,7 @@ header div h1 {
     width: 100%;
     min-width: 320px;
     max-width: 440px;
-    margin: 0;
+    margin: 0 0 20px 0;
     border: solid 3px;
     border-radius: 4px;
     justify-content: flex-start;
@@ -54,13 +56,14 @@ header div h1 {
 .header__search-icon {
     width: 10%;
     height: 30px;
-    padding: 10px;
+    padding: 0px;
     border-left: solid 3px;
     background-image: url('https://i.postimg.cc/MTVzcSw4/search-icon1.png');
     background-repeat:  no-repeat;
     background-position: center;
     background-size: contain;
     cursor: pointer;
+    background-color: white;
 }
 
 main {
