@@ -7,8 +7,6 @@ let pag = "0";
 const settings2 ="&rating=g&lang=es"
 let num = 0;
 
-// "https://api.giphy.com/v1/gifs/search?api_key=ZBVqqcT3jmV53jdk30OTdoOBacTk72nk&q=cat&limit=25&offset=0&rating=g&lang=en"
-
 const searchFormInput = document.querySelector('.header__input');
 const searchFormButton = document.querySelector('.header__search-icon')
 searchFormInput.addEventListener('input', () => {
@@ -47,35 +45,33 @@ function createGifs (world) {
                 containergif.appendChild(gifImg);
                 lazyLoader.observe(gifImg);
             });
-            const btnLoadMore = document.createElement('button')
-            btnLoadMore.innerText='cargar mas';
-            btnLoadMore.addEventListener('click',createPaginatedGifs)
-            containergif.appendChild(btnLoadMore);
         })
 
 }
 
+window.addEventListener('scroll', createPaginatedGifs)
+
 function createPaginatedGifs() {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    const scrollIsBottom = (scrollTop + clientHeight ) >= (scrollHeight - 15);
     const world = searchFormInput.value;
-    let numberPag = Number(pag);
-    numberPag = numberPag + 24;
-    pag = numberPag.toString();
-    fetch(`${API}${apikey}${world}${settings1}${pag}${settings2}`)
-    .then(res=>res.json())
-    .then(datos=>{
-        const gifs = datos.data;
-        const containergif = document.querySelector('.main__container');
-        gifs.forEach(dato => {
-            const gifImg = document.createElement('img');
-            gifImg.setAttribute(
-            'data-img',dato.images.original.url);
-            containergif.appendChild(gifImg);
-            lazyLoader.observe(gifImg);
-        });
-        const btnLoadMore = document.createElement('button')
-        btnLoadMore.innerText='cargar mas';
-        btnLoadMore.addEventListener('click',createPaginatedGifs)
-        containergif.appendChild(btnLoadMore);
-    })
+    if (scrollIsBottom) {
+        let numberPag = Number(pag);
+        numberPag = numberPag + 25;
+        pag = numberPag.toString();
+        fetch(`${API}${apikey}${world}${settings1}${pag}${settings2}`)
+        .then(res=>res.json())
+        .then(datos=>{
+            const gifs = datos.data;
+            const containergif = document.querySelector('.main__container');
+            gifs.forEach(dato => {
+                const gifImg = document.createElement('img');
+                gifImg.setAttribute(
+                'data-img',dato.images.original.url);
+                containergif.appendChild(gifImg);
+                lazyLoader.observe(gifImg);
+            });
+        })
+    }
 }
 
